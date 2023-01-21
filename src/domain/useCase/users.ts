@@ -1,8 +1,6 @@
-export interface User {
-  id: string;
-  username: string;
-  profileUrl: string;
-  photoUrl?: string;
-  email?: string;
-  techs?: Array<string>;
+import { AuthResponse } from "./auth";
+import { Position } from "./Position";
+
+export interface User extends AuthResponse {
+  position: Position;
 }
