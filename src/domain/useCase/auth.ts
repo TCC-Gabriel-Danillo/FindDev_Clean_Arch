@@ -1,5 +1,3 @@
-import { User } from "./users";
-
 export interface Credentials {
   code: string;
   client_id: string;
@@ -7,5 +5,14 @@ export interface Credentials {
 }
 
 export interface AuthUseCase {
-  authenticateGithub: (credentials: Credentials) => Promise<User | undefined>;
+  authenticateGithub: (credentials: Credentials) => Promise<AuthResponse | undefined>;
+}
+
+export interface AuthResponse {
+  id: string;
+  username: string;
+  profileUrl: string;
+  photoUrl?: string;
+  email?: string;
+  techs?: Array<string>;
 }
