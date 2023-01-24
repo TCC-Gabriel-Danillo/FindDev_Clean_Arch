@@ -1,12 +1,13 @@
 import { Coords } from "_/domain/useCase/position";
-import { User } from "_/domain/useCase/users";
+import { User, UserUseCase } from "_/domain/useCase/users";
 import { DatabaseType } from "../protocols/database/database";
 import { QueryOptions } from "../protocols/database/options";
 import { FirebaseUser, mapFirebaseUserToUser, mapUserToFirebaseUser } from "../protocols/dto/firebase";
 import { LocationInfraType } from "../protocols/dto/geohash";
 import _ from "lodash";
+import { AuthResponse } from "_/domain/useCase/auth";
 
-export class UsersService {
+export class UsersService implements UserUseCase {
   constructor(private readonly geohash: LocationInfraType, private readonly userDatabase: DatabaseType) {}
 
   async listUsersByDistance(location: Coords, distanceInM: number): Promise<User[]> {
@@ -35,9 +36,12 @@ export class UsersService {
     return position;
   }
 
-  async createUser(user: User) {
-    const fUser = mapUserToFirebaseUser(user);
+  async createUser(user: AuthResponse) {
+    const position = await this.getUserPosition();
+    const _user = { ...user, position };
+    const fUser = mapUserToFirebaseUser(_user);
     await this.userDatabase.createOrReplace(fUser, fUser.id);
+    return _user;
   }
 
   async updateUser(user: User) {
