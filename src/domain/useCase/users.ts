@@ -7,7 +7,5 @@ export interface User extends AuthResponse {
 
 export interface UserUseCase {
   listUsersByDistance: (location: Coords, distanceInM: number) => Promise<User[]>;
-  getUserPosition: () => Promise<Position>;
-  createUser: (user: AuthResponse) => Promise<User>;
-  updateUser: (user: User) => Promise<void>;
+  createAndUpdateUser: (user: AuthResponse) => Promise<User>;
 }

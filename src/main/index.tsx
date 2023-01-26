@@ -5,7 +5,7 @@ import { UsersService } from "_/data/usecases/UsersService";
 import { LocalStorage } from "_/infra/cache/LocalStorage";
 import { Database } from "_/infra/database/Database";
 import { HttpsClient } from "_/infra/https/HttpsClient";
-import { Geohash } from "_/infra/location/Location";
+import { LocationService } from "_/data/usecases/LocationService";
 import { GITHUB_URL } from "_/presentation/constants";
 import { AuthContextProvider } from "_/presentation/context/authContext";
 import { UserContextProvider } from "_/presentation/context/userContext";
@@ -16,7 +16,9 @@ import { LocationContextProvider } from "_/presentation/context/locationContext"
 export const Main = () => {
   const gitApi = new HttpsClient(GITHUB_URL.API_BASE_URL);
   const gitAuth = new HttpsClient(GITHUB_URL.AUTH_BASE_URL);
-  const location = new Geohash();
+
+  const location = new LocationService();
+
   const userDatabase = new Database("users");
   const localStorage = new LocalStorage();
   const authService = new AuthService(gitApi, gitAuth);
@@ -26,7 +28,7 @@ export const Main = () => {
 
   if (usingFonts)
     return (
-      <LocationContextProvider>
+      <LocationContextProvider locationService={location}>
         <AuthContextProvider authService={authService} localStorage={localStorage}>
           <UserContextProvider localStorage={localStorage} userService={userService}>
             <Routes />
