@@ -23,8 +23,8 @@ export function MapScreen() {
   const { navigate } = useNavigate();
 
   const initialRegion = {
-    latitude: Number(position?.latitude),
-    longitude: Number(position?.longitude),
+    latitude: Number(position?.location?.latitude),
+    longitude: Number(position?.location?.longitude),
     latitudeDelta: 0.05,
     longitudeDelta: 0.05,
   };
@@ -49,7 +49,7 @@ export function MapScreen() {
     navigate("Inital");
   };
 
-  if (position.latitude && position.longitude)
+  if (position?.location?.latitude && position?.location?.longitude)
     return (
       <View style={styles.container}>
         <MapView
@@ -59,11 +59,11 @@ export function MapScreen() {
           maxZoomLevel={14}
           minZoomLevel={3.5}
           testID={TEST_ID.MAP}>
-          {users.map((user: User) => {
+          {users.map((user: User, i) => {
             return (
               <Marker
                 testID={TEST_ID.MAP_MARKER}
-                key={user.id}
+                key={i}
                 coordinate={{
                   latitude: user.position.location.latitude,
                   longitude: user.position.location.longitude,

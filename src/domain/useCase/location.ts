@@ -1,11 +1,11 @@
 import { Coords, Position } from "_/domain/useCase/position";
 
-export interface LocationInfraType {
+export interface LocationUseCase {
   requestPermission: () => Promise<boolean>;
   getCurrentPosition: () => Promise<Position>;
   generateGeoHashBounds: (location: Coords, distanceInM: number) => Bounds;
 }
 
-type GeopHash = string;
-type GeoHashRange = [GeopHash, GeopHash];
+export type GeopHash = string;
+export type GeoHashRange = [GeopHash, GeopHash];
 export type Bounds = GeoHashRange[];
