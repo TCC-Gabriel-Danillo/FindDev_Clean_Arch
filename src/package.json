@@ -32,7 +32,6 @@
     "jest-expo": "^47.0.1",
     "lodash": "^4.17.21",
     "module-resolver": "^1.0.0",
-    "nock": "^13.2.9",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
