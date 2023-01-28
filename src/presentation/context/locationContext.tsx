@@ -27,7 +27,7 @@ export function LocationContextProvider({ children, locationService }: Props) {
   useEffect(() => {
     (async () => {
       const position = await getPositionAsync();
-      if (position?.location.latitude && position?.location.latitude) setPosistion(position);
+      if (position?.location.latitude && position?.location.longitude) setPosistion(position);
     })();
   }, []);
 
