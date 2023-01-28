@@ -1,5 +1,5 @@
 import { AuthResponse } from "_/domain/useCase/auth";
-import { Coords, Position } from "_/domain/useCase/position";
+import { Coords } from "_/domain/useCase/position";
 import { User, UserUseCase } from "_/domain/useCase/users";
 import { mockAuthResponse } from "./AuthStub";
 import { mockPosition } from "./LocationStub";

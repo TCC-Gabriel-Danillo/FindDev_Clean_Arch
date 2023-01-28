@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useCallback } from "react";
 import { Alert } from "react-native";
 
 import { STORAGE_KEYS } from "../constants";
@@ -26,19 +26,19 @@ export const UserContext = createContext<IUserContext>({} as IUserContext);
 export function UserContextProvider({ children, userService, localStorage }: UserContextProps) {
   const { setPersistentState } = usePersistentState(STORAGE_KEYS.USERS, localStorage, {});
 
-  const createUser = async (authedUser: AuthResponse): Promise<void> => {
+  const createUser = useCallback(async (authedUser: AuthResponse): Promise<void> => {
     try {
       const user = await userService.createAndUpdateUser(authedUser);
       setPersistentState(user);
     } catch (error) {
       if (error instanceof Error) Alert.alert(error.message);
     }
-  };
+  }, []);
 
-  const listUsers = async (coords: Coords) => {
+  const listUsers = useCallback(async (coords: Coords) => {
     const users = await userService.listUsersByDistance(coords, DISTANCE_IN_METERS);
     return users;
-  };
+  }, []);
 
   return <UserContext.Provider value={{ createUser, listUsers }}>{children}</UserContext.Provider>;
 }
